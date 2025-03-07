@@ -1,0 +1,32 @@
+Add on line 67 ui.py for check boxes:
+
+        # Checkbox's
+        # Saved
+        self.saved_bool = tk.BooleanVar(value=False)
+        self.saved_checkbox = ttk.Checkbutton(inputs_frame, text="Saved", variable=self.saved_bool)
+        self.saved_checkbox.grid(row=4, column=3, padx=5, pady=5, sticky="w")
+
+        # Cancelled
+        self.cancel_bool = tk.BooleanVar(value=False)
+        self.cancel_checkbox = ttk.Checkbutton(inputs_frame, text="Cancelled", variable=self.cancel_bool)
+        self.cancel_checkbox.grid(row=5, column=3, padx=5, pady=5, sticky="w")
+
+        # Renewed
+        self.renewed_bool = tk.BooleanVar(value=False)
+        self.renewed_checkbox = ttk.Checkbutton(inputs_frame, text="Renewed", variable=self.renewed_bool)
+        self.renewed_checkbox.grid(row=6, column=3, padx=5, pady=5, sticky="w")
+
+        # ROR
+        self.ror_bool = tk.BooleanVar(value=False)
+        self.ror_checkbox = ttk.Checkbutton(inputs_frame, text="ROR", variable=self.ror_bool)
+        self.ror_checkbox.grid(row=7, column=3, padx=5, pady=5, sticky="w")
+
+        # Noted
+        self.noted_bool = tk.BooleanVar(value=False)
+        self.noted_checkbox = ttk.Checkbutton(inputs_frame, text="Noted", variable=self.noted_bool)
+        self.noted_checkbox.grid(row=4, column=1, padx=5, pady=5, sticky="w")
+
+        # Emailed
+        self.emailed_bool = tk.BooleanVar(value=False)
+        self.emailed_checkbox = ttk.Checkbutton(inputs_frame, text="Emailed", variable=self.emailed_bool)
+        self.emailed_checkbox.grid(row=5, column=1, padx=5, pady=5, sticky="w")
