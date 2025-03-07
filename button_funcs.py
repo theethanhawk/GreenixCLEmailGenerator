@@ -1,10 +1,12 @@
+
+
 # Button functions
 
 import tkinter as tk
 from tkinter import messagebox
 import pyperclip
 from jinja2 import Template
-from email_data import EMAIL_TEMPLATES
+from email_data import EMAIL_TEMPLATES, CUSTOM_NOTE
 
 def generate_email(app):
     """Generate a formatted email based on form input and display it in the text box."""
@@ -15,6 +17,17 @@ def generate_email(app):
     billing_schedule = app.billing_dropdown.get()
     next_service = app.next_service_entry.get()
     rate = app.rate_entry.get()
+    note_in = app.custom_note.get()
+    amount = app.amount_entry.get()
+
+    # Get the appropriate note content
+    note_value = CUSTOM_NOTE.get(note_in, CUSTOM_NOTE["None"])
+    note_template = Template(note_value)
+
+    # Use amount_entry to autofill the custom note
+    note = note_template.render(
+        amount=amount
+    )
 
     # Get the appropriate email template
     template_text = EMAIL_TEMPLATES.get(subscription, EMAIL_TEMPLATES["default"])
@@ -26,14 +39,15 @@ def generate_email(app):
         subscription=subscription,
         billing_schedule=billing_schedule,
         next_service=next_service,
-        rate=rate
+        rate=rate,
+        notes=note
     )
 
     # Update the Tkinter text display
     app.email_display.config(state=tk.NORMAL)  # Enable text box
     app.email_display.delete("1.0", tk.END)  # Clear previous content
     app.email_display.insert(tk.END, email_text)  # Insert new email
-    app.email_display.config(state=tk.DISABLED)  # Disable editing
+    # app.email_display.config(state=tk.DISABLED)  # Disable editing
 
 def copy_email_to_clipboard(app):
     """Copy the generated email to clipboard or warning message."""
@@ -53,4 +67,14 @@ def clear_form(app):
     app.email_display.config(state=tk.NORMAL)
     app.email_display.delete("1.0", tk.END)
     app.email_display.config(state=tk.DISABLED)
+    app.custom_note.set("")
 
+
+def update_amount_field(email_generator):
+    """Show or hide the 'Amount' input field based on the custom note selection."""
+    if email_generator.custom_note.get().lower() == "none":
+        email_generator.amount_label.grid_remove()
+        email_generator.amount_entry.grid_remove()
+    else:
+        email_generator.amount_label.grid()
+        email_generator.amount_entry.grid()
